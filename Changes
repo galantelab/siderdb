@@ -1,5 +1,9 @@
 This file documents the revision history for Perl extension siderDB.
 
+0.03 2023-09-26 20:38:32
+        - start dockerizing the application
+        - add Makefile to manage the project
+
 0.02 2023-09-26 16:30:43
         - add LICENSE and README.md
         - move from Makefile.PL to cpanfile
