@@ -9,4 +9,4 @@ COPY . .
 
 VOLUME ["/app"]
 
-CMD ["perl", "-Ilib", "script/siderdb_server.pl", "--port=5000"]
+CMD ["make", "server"]
