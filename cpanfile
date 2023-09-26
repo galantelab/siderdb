@@ -1,4 +1,5 @@
 requires 'Moose';
+requires 'MooseX::Daemonize::Pid::File';
 requires 'namespace::autoclean';
 requires 'Config::General';
 requires 'Term::Size::Any';
