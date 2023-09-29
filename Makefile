@@ -13,6 +13,7 @@ help:
 	@echo ""
 	@echo "==> Manage application"
 	@echo "update_cpanlib   Install CPAN libs"
+	@echo "update_db        Deploy Sqitch"
 	@echo "update           Update and deploy"
 	@echo "server           Start demo application server"
 	@echo "hup              Restart demo application server"
@@ -31,16 +32,24 @@ help:
 	@echo "app-hup          'make hup' inside the app container"
 	@echo "app-restart      'make update & make hup' inside the app container"
 	@echo "app-prove        'prove' inside the app container"
+	@echo "app-db-status    'sqitch' status inside the app container"
+	@echo "app-db-verify    'sqitch' verify inside the app container"
+	@echo "app-db-log       'sqitch' log inside the app container"
+	@echo "db-psql          'psql' inside the db container"
+	@echo "db-shell         Open a shell in the db container"
 	@echo ""
 
 # Manage application
 
-.PHONY: update_cpanlib update server hup server-stop dependencies
+.PHONY: update_cpanlib update_db update server hup server-stop dependencies
 
 update_cpanlib:
 	@cpanm --quiet --notest --installdeps .
 
-update: update_cpanlib
+update_db:
+	-@sqitch deploy
+
+update: update_db update_cpanlib
 
 server: update
 	@perl -Ilib script/siderdb_server.pl --port=5000 --pidfile=$(PID_FILE)
@@ -76,7 +85,9 @@ build:
 
 # Container internal commands
 
-.PHONY: app-shell app-update app-hup app-server-stop app-server app-restart app-prove
+.PHONY: app-shell app-update app-hup app-server-stop app-server \
+	app-restart app-prove app-db-status app-db-verify \
+	app-db-log db-psql db-shell
 
 app-shell:
 	@docker-compose exec app bash
@@ -97,3 +108,18 @@ app-restart: app-update app-hup
 
 app-prove:
 	@docker-compose exec app prove -lvr $(filter-out app-prove,$(MAKECMDGOALS))
+
+app-db-status:
+	@docker-compose exec app sqitch status
+
+app-db-verify:
+	@docker-compose exec app sqitch verify
+
+app-db-log:
+	@docker-compose exec app sqitch log
+
+db-psql:
+	@docker-compose exec db psql
+
+db-shell:
+	@docker-compose exec db bash
