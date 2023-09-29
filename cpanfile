@@ -3,6 +3,8 @@ requires 'MooseX::Daemonize::Pid::File';
 requires 'namespace::autoclean';
 requires 'Config::General';
 requires 'Term::Size::Any';
+
+requires 'DBD::Pg';
 requires 'App::Sqitch';
 
 requires 'Catalyst::Runtime' => '5.90131';
