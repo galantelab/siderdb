@@ -1,5 +1,10 @@
 This file documents the revision history for Perl extension siderDB.
 
+0.04 2023-10-01 22:18:56
+        - initialize Sqitch configuration
+        - adopt PostgreSQL as RDBMS for the project
+        - write database population tables
+
 0.03 2023-09-26 20:38:32
         - start dockerizing the application
         - add Makefile to manage the project
