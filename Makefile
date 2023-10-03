@@ -14,6 +14,7 @@ help:
 	@echo "==> Manage application"
 	@echo "update_cpanlib   Install CPAN libs"
 	@echo "update_db        Deploy Sqitch"
+	@echo "dump_db          Dump classes with dbicdump"
 	@echo "update           Update and deploy"
 	@echo "server           Start demo application server"
 	@echo "hup              Restart demo application server"
@@ -41,7 +42,7 @@ help:
 
 # Manage application
 
-.PHONY: update_cpanlib update_db update server hup server-stop dependencies
+.PHONY: update_cpanlib update_db dump_db update server hup server-stop dependencies
 
 update_cpanlib:
 	@cpanm --quiet --notest --installdeps .
@@ -49,7 +50,14 @@ update_cpanlib:
 update_db:
 	-@sqitch deploy
 
-update: update_db update_cpanlib
+dump_db:
+	@dbicdump -o dump_directory=./lib \
+		siderDB::Schema \
+		dbi:Pg:host=$$PGHOST,dbname=$$PGDATABASE \
+		$$PGUSER \
+		$$PGPASSWORD
+
+update: update_db dump_db update_cpanlib
 
 server: update
 	@perl -Ilib script/siderdb_server.pl --port=5000 --pidfile=$(PID_FILE)
