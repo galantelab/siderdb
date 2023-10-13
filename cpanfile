@@ -20,4 +20,5 @@ requires 'Catalyst::Helper::Model::DBIC::Schema';
 
 on test => sub {
   requires 'Test::More' => '0.88';
+  requires 'Test::DBIx::Class'=> '0.52';
 };
