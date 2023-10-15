@@ -17,6 +17,7 @@ requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::Helper::Model::DBIC::Schema';
+requires 'Catalyst::View::TT';
 
 on test => sub {
   requires 'Test::More' => '0.88';
