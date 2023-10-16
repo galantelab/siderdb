@@ -1,0 +1,27 @@
+<h1>[% title %]</h1>
+
+<form action="/search/[% search.type %]" method="GET">
+  <input type="text" name="key" value="" placeholder="Enter your query">
+  <button type="submit">Search</button>
+</form>
+
+[% IF search.result %]<p>[% search.key _ ": " _ search.result %]</p>[% END %]
+
+<div>
+[% IF search.type == 'super_population' %]
+<!-- Exibir resultados do SuperPopulation -->
+<!-- Use variáveis do objeto Result para exibir os resultados -->
+
+[% ELSIF search.type == 'population' %]
+<!-- Exibir resultados do Population -->
+<!-- Use variáveis do objeto Result para exibir os resultados -->
+
+[% ELSE %]
+<!-- Mensagem de tipo de busca não reconhecido -->
+[% END %]
+</div>
+
+<div>
+  <a href="/search/super_population">Super Population</a>
+  <a href="/search/population">Population</a>
+</div>
