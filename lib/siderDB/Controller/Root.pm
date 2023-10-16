@@ -29,10 +29,25 @@ The root page (/)
 =cut
 
 sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
+    my ($self, $c) = @_;
+    $c->stash->{title} = 'Main';
+}
 
-    # Hello World
-    $c->response->body( $c->welcome_message );
+=head2 auto
+
+Initialize resultsets
+
+=cut
+
+sub auto :Private {
+    my ($self, $c) = @_;
+
+    my %resultsets = (
+        population       => $c->model('Schema::Population'),
+        super_population => $c->model('Schema::SuperPopulation')
+    );
+
+    $c->stash->{resultsets} = \%resultsets;
 }
 
 =head2 default
@@ -42,8 +57,8 @@ Standard 404 error page
 =cut
 
 sub default :Path {
-    my ( $self, $c ) = @_;
-    $c->response->body( 'Page not found' );
+    my ($self, $c) = @_;
+    $c->response->body('Page not found');
     $c->response->status(404);
 }
 
