@@ -60,7 +60,17 @@ sub query :Chained('base') :PathPart('') :Args(0) {
 
     if ($key) {
         my $search = $c->stash->{search};
-        @$search{qw/key result/} = ($key, "Worked");
+        my $type = $search->{type};
+        my $rs = $c->stash->{resultsets}->{$type};
+
+        # TODO: Searching for "code" works for Population
+        # and SuperPopulaton. I need to make switch
+        # when working with the other tables
+        my $result = $rs->find(
+            {code  => $key}
+        );
+
+        @$search{qw/key result/} = ($key, $result);
     }
 }
 

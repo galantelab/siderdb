@@ -1,27 +1,44 @@
-<h1>[% title %]</h1>
+[% search_title = search.type.ucfirst.replace('_', ' ') %]
 
-<form action="/search/[% search.type %]" method="GET">
-  <input type="text" name="key" value="" placeholder="Enter your query">
-  <button type="submit">Search</button>
-</form>
-
-[% IF search.result %]<p>[% search.key _ ": " _ search.result %]</p>[% END %]
+<h1>Search for [% search_title %]</h1>
 
 <div>
-[% IF search.type == 'super_population' %]
-<!-- Exibir resultados do SuperPopulation -->
-<!-- Use variáveis do objeto Result para exibir os resultados -->
-
-[% ELSIF search.type == 'population' %]
-<!-- Exibir resultados do Population -->
-<!-- Use variáveis do objeto Result para exibir os resultados -->
-
-[% ELSE %]
-<!-- Mensagem de tipo de busca não reconhecido -->
-[% END %]
-</div>
-
-<div>
-  <a href="/search/super_population">Super Population</a>
+  <form method="GET">
+    <input type="text" name="key" value="" placeholder="Enter your query">
+    <button type="submit">Search</button>
+  </form>
+  <a href="/search/super_population">Super population</a>
   <a href="/search/population">Population</a>
 </div>
+
+[%
+ # If there is a searching, then verify if a result exists.
+ # Check the result for its type in order to show the
+ # appropriate view
+%]
+
+[% IF search.key %]
+  <div>
+  [% IF search.result %]
+    [% rs = search.result %]
+    [% SWITCH search.type %]
+    [%   CASE ['super_population', 'population'] %]
+    <table>
+      <caption>
+        Found [% search_title %] <em>[% search.key %]</em>
+      </caption>
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>[% rs.code %]</td>
+        <td>[% rs.description %]</td>
+      </tr>
+    </tabe>
+    [% END %]
+  [% ELSE %]
+    <p>Not found <em>[% search.key %]</em> for [% search_title %] :(</p>
+  [% END %]
+  </div>
+[% END %]
