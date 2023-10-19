@@ -2,11 +2,11 @@
 
 BEGIN;
 
-SELECT code, description
+SELECT id, code, description, timestamp
 FROM super_population
 WHERE FALSE;
 
-SELECT code, super_population_code, description
+SELECT id, super_population_id, code, description, timestamp
 FROM population
 WHERE FALSE;
 

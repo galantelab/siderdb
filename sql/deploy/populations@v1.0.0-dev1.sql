@@ -2,9 +2,6 @@
 
 BEGIN;
 
-DROP TABLE population;
-DROP TABLE super_population;
-
 CREATE TABLE super_population (
 	id SERIAL PRIMARY KEY,
 	code CHAR(3) NOT NULL,
