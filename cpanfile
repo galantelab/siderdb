@@ -4,6 +4,7 @@ requires 'MooseX::NonMoose' => '0.25';
 requires 'namespace::autoclean';
 requires 'Config::General';
 requires 'Term::Size::Any';
+requires 'List::Util';
 
 requires 'DBD::Pg';
 requires 'App::Sqitch';
