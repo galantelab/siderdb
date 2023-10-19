@@ -9,26 +9,18 @@ fixture_sets:
     - SuperPopulation
     -
       -
-        - id
         - code
         - description
-        - timestamp
       -
-        - 1
         - BRZ
         - Brazilians
-        - 20231224
     - Population
     -
       -
-        - super_population_id
-        - id
         - code
+        - super_population_code
         - description
-        - timestamp
       -
-        - 1
-        - 1
         - ESP
+        - BRZ
         - Elderly Brazilians living in Sao Paulo
-        - 20231224

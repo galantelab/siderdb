@@ -12,16 +12,12 @@ ok my $sp = SuperPopulation->find({code => 'BRZ'}), 'found super_population';
 ok my $p = Population->find({code => 'ESP'}), 'found population';
 
 is_fields $sp, {
-	code        => 'BRZ',
-	description => 'Brazilians',
-	timestamp   => 20231224
+	description => 'Brazilians'
 }, 'BRZ has the expected fields';
 
 is_fields $p, {
-	super_population_id => 1,
-	code        => 'ESP',
-	description => 'Elderly Brazilians living in Sao Paulo',
-	timestamp   => 20231224
+	super_population_code => $sp,
+	description => 'Elderly Brazilians living in Sao Paulo'
 }, 'ESP has the expected fields';
 
 done_testing;

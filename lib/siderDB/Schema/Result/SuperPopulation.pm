@@ -23,13 +23,6 @@ __PACKAGE__->table("super_population");
 
 =head1 ACCESSORS
 
-=head2 id
-
-  data_type: 'integer'
-  is_auto_increment: 1
-  is_nullable: 0
-  sequence: 'super_population_id_seq'
-
 =head2 code
 
   data_type: 'char'
@@ -41,47 +34,26 @@ __PACKAGE__->table("super_population");
   data_type: 'text'
   is_nullable: 0
 
-=head2 timestamp
-
-  data_type: 'timestamp with time zone'
-  default_value: current_timestamp
-  is_nullable: 0
-  original: {default_value => \"now()"}
-
 =cut
 
 __PACKAGE__->add_columns(
-  "id",
-  {
-    data_type         => "integer",
-    is_auto_increment => 1,
-    is_nullable       => 0,
-    sequence          => "super_population_id_seq",
-  },
   "code",
   { data_type => "char", is_nullable => 0, size => 3 },
   "description",
   { data_type => "text", is_nullable => 0 },
-  "timestamp",
-  {
-    data_type     => "timestamp with time zone",
-    default_value => \"current_timestamp",
-    is_nullable   => 0,
-    original      => { default_value => \"now()" },
-  },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</id>
+=item * L</code>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("id");
+__PACKAGE__->set_primary_key("code");
 
 =head1 RELATIONS
 
@@ -96,13 +68,13 @@ Related object: L<siderDB::Schema::Result::Population>
 __PACKAGE__->has_many(
   "populations",
   "siderDB::Schema::Result::Population",
-  { "foreign.super_population_id" => "self.id" },
+  { "foreign.super_population_code" => "self.code" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-03 20:39:08
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ZZcXZjaAMIjsmJqM0Ettjw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-19 04:13:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/Ql3YdBZq8KYE3V8+6XfIg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
