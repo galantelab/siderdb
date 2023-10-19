@@ -13,9 +13,11 @@ help:
 	@echo ""
 	@echo "==> Manage application"
 	@echo "update_cpanlib   Install CPAN libs"
-	@echo "update_db        Deploy Sqitch"
-	@echo "dump_db          Dump classes with dbicdump"
-	@echo "update           Update and deploy"
+	@echo "update_db        Deploy populate and dump schema for db"
+	@echo "deploy_db        Deploy with Sqitch"
+	@echo "populate_db      Populate db with toy dataset"
+	@echo "dump_schema_db   Dump classes with dbicdump"
+	@echo "update           Update deps and db"
 	@echo "server           Start demo application server"
 	@echo "hup              Restart demo application server"
 	@echo "dependencies     List (most) CPAN dependencies"
@@ -42,25 +44,35 @@ help:
 
 # Manage application
 
-.PHONY: update_cpanlib update_db dump_db update server hup server-stop dependencies
+.PHONY: update_cpanlib update_db deploy_db populate_db dump_schema_db update \
+	server hup server-stop dependencies
 
 update_cpanlib:
 	@cpanm --quiet --notest --installdeps .
 
-update_db:
-	-@sqitch deploy
+update_db: deploy_db populate_db dump_schema_db
 
-dump_db:
+deploy_db:
+	@sqitch deploy
+
+populate_db:
+	@perl script/siderdb_populate.pl  \
+		t/etc/schema.yml \
+		dbi:Pg:host=$$PGHOST,dbname=$$PGDATABASE \
+		$$PGUSER \
+		$$PGPASSWORD
+
+dump_schema_db:
 	@dbicdump -o dump_directory=./lib \
 		siderDB::Schema \
 		dbi:Pg:host=$$PGHOST,dbname=$$PGDATABASE \
 		$$PGUSER \
 		$$PGPASSWORD
 
-update: update_db dump_db update_cpanlib
+update: update_db update_cpanlib
 
 server: update
-	@perl -Ilib script/siderdb_server.pl --port=5000 --pidfile=$(PID_FILE)
+	@perl script/siderdb_server.pl --port=5000 --pidfile=$(PID_FILE)
 
 hup:
 	@kill -HUP $$(cat $(PID_FILE));
