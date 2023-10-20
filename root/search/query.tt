@@ -1,14 +1,21 @@
 [% search_title = search.type.ucfirst.replace('_', ' ') %]
 
-<h1>Search for [% search_title %]</h1>
-
-<div>
-  <form method="GET">
-    <input type="text" name="key" value="" placeholder="Enter your query">
-    <button type="submit">Search</button>
-  </form>
-  <a href="/search/super_population">Super population</a>
-  <a href="/search/population">Population</a>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h1 class="text-center">Search for [% search_title %]</h1>
+      <form class="d-flex" method="GET">
+        <div class="input-group">
+          <input class="form-control form-control-lg me-2" type="text" placeholder="Make your search" aria-label="Make your search" name="key" value="">
+          <button class="btn btn-primary btn-lg" type="submit">Search</button>
+        </div>
+      </form>
+      <div class="d-flex justify-content-center mt-3">
+        <a href="/search/super_population" class="mx-2">Super population</a>
+        <a href="/search/population" class="mx-2">Population</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 [%
@@ -18,27 +25,31 @@
 %]
 
 [% IF search.key %]
-  <div>
-  [% IF search.result %]
-    [% rs = search.result %]
-    [% SWITCH search.type %]
-    [%   CASE ['super_population', 'population'] %]
-    <table>
-      <caption>
-        Found [% search_title %] <em>[% search.key %]</em>
-      </caption>
-      <tr>
-        <th>Code</th>
-        <th>Description</th>
-      </tr>
-      <tr>
-        <td>[% rs.code %]</td>
-        <td>[% rs.description %]</td>
-      </tr>
-    </tabe>
-    [% END %]
-  [% ELSE %]
-    <p>Not found <em>[% search.key %]</em> for [% search_title %] :(</p>
-  [% END %]
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+      [% IF search.result %]
+        [% rs = search.result %]
+        [% SWITCH search.type %]
+        [%   CASE ['super_population', 'population'] %]
+        <h2 class="text-center">
+          Found [% search_title %] <em>[% search.key %]</em>
+        </h2>
+        <table class="table">
+          <tr>
+            <th>Code</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>[% rs.code %]</td>
+            <td>[% rs.description %]</td>
+          </tr>
+        </tabe>
+        [% END %]
+      [% ELSE %]
+        <p>Not found <em>[% search.key %]</em> for [% search_title %] :(</p>
+      [% END %]
+      </div>
+    </div>
   </div>
 [% END %]
