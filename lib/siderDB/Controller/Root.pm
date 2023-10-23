@@ -33,23 +33,6 @@ sub index :Path :Args(0) {
     $c->stash->{title} = 'Main';
 }
 
-=head2 auto
-
-Initialize resultsets
-
-=cut
-
-sub auto :Private {
-    my ($self, $c) = @_;
-
-    my %resultsets = (
-        population       => $c->model('Schema::Population'),
-        super_population => $c->model('Schema::SuperPopulation')
-    );
-
-    $c->stash->{resultsets} = \%resultsets;
-}
-
 =head2 default
 
 Standard 404 error page

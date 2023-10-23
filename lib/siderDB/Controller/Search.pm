@@ -3,6 +3,8 @@ package siderDB::Controller::Search;
 use Moose;
 use namespace::autoclean;
 
+with qw/siderDB::Role::Search/;
+
 BEGIN { extends 'Catalyst::Controller'; }
 
 =head1 NAME
@@ -17,61 +19,32 @@ Catalyst Controller. Manage /search/ pages
 
 =cut
 
-=head2 base
-
-Validate and initialize /search/*/ pages
-
-=cut
-
-sub base :Chained('/') :PathPart('search') :CaptureArgs(1) {
-    my ($self, $c, $type) = @_;
-
-    # Get the hashref resultsets initialized
-    # into Root controller
-    my $resultsets = $c->stash->{resultsets};
-
-    if (exists $resultsets->{$type}) {
-        # If there is search for type, set the entry
-        # carch in order to be used in the tenplate
-        $c->stash(
-            title  => "Search $type",
-            search => {type => $type}
-        );
-    } else {
-        #die "There is no search for '$rs_type'";
-        $c->response->body("Page not found: $type");
-        $c->response->status(404);
-        $c->detach;
-    }
-}
-
 =head2 query
 
-End of the chained /search/*/. Query the key according
-to the search.type
+Get the key searched by the user and look for
+it according to the table (type)
 
 =cut
 
-sub query :Chained('base') :PathPart('') :Args(0) {
-    my ($self, $c) = @_;
+sub query :Path('/search') :Args(1) {
+    my ($self, $c, $type) = @_;
 
     # Catch GET params only
     my $key = $c->req->query_params->{key};
 
-    if ($key) {
-        my $search = $c->stash->{search};
-        my $type = $search->{type};
-        my $rs = $c->stash->{resultsets}->{$type};
+    # Search for the key
+    $self->with_search($c, $type, $key);
 
-        # TODO: Searching for "code" works for Population
-        # and SuperPopulaton. I need to make switch
-        # when working with the other tables
-        my $result = $rs->find(
-            {code  => $key}
-        );
-
-        @$search{qw/key result/} = ($key, $result);
+    # If searching failed, stash.search does not exist
+    unless (exists $c->stash->{search}) {
+        $c->response->body("Page not found: $type");
+        $c->response->status(404);
+        $c->detach;
     }
+
+    # Set page title
+    $c->stash->{title} = 'Search '
+        . $c->stash->{search}->{title};
 }
 
 =encoding utf8
