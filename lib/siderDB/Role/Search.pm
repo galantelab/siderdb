@@ -53,7 +53,7 @@ sub _build_search_tables {
             model => 'Schema::SuperPopulation',
             find  => sub {
                 $_[0]->model('Schema::SuperPopulation')
-                    ->find({code => $_[1]})
+                    ->find({code => uc($_[1])})
             }
         },
         population => {
@@ -61,7 +61,7 @@ sub _build_search_tables {
             model => 'Schema::Population',
             find  => sub {
                 $_[0]->model('Schema::Population')
-                    ->find({code => $_[1]})
+                    ->find({code => uc($_[1])})
             }
         }
     };
