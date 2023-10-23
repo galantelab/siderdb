@@ -1,0 +1,3 @@
+[% rs = search.result %]
+
+<h1>Profile for [% search.title _ " " _ rs.code %]</h1>

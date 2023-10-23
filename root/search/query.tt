@@ -39,7 +39,13 @@
             <th>Description</th>
           </tr>
           <tr>
-            <td>[% rs.code %]</td>
+            <td>
+              <a href="[%-
+                 c.uri_for(c.controller('View').action_for('profile'),
+                   [search.type, rs.code.lower]) %]">
+              [% rs.code %]
+              </a>
+            </td>
             <td>[% rs.description %]</td>
           </tr>
         </tabe>
