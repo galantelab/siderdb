@@ -5,18 +5,22 @@ BEGIN;
 DROP TABLE population;
 DROP TABLE super_population;
 
-CREATE TABLE super_population (
-	code CHAR(3) PRIMARY KEY,
-	description TEXT NOT NULL
+CREATE TABLE superpopulation (
+	id INTEGER PRIMARY KEY,
+	code TEXT UNIQUE DEFAULT NULL,
+	name TEXT NOT NULL
 );
 
 CREATE TABLE population (
-	code CHAR(3) PRIMARY KEY,
-	super_population_code CHAR(3) NOT NULL,
+	id INTEGER PRIMARY KEY,
+	superpopulation_id INTEGER NOT NULL,
+	igsr_id TEXT UNIQUE DEFAULT NULL,
+	code TEXT UNIQUE DEFAULT NULL,
+	name TEXT NOT NULL,
 	description TEXT NOT NULL,
-	CONSTRAINT super_population_fkey
-		FOREIGN KEY (super_population_code)
-			REFERENCES super_population(code)
+	CONSTRAINT superpopulation_fkey
+		FOREIGN KEY (superpopulation_id)
+			REFERENCES superpopulation(id)
 			ON DELETE CASCADE
 			ON UPDATE CASCADE
 );

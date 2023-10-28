@@ -2,11 +2,11 @@
 
 BEGIN;
 
-SELECT code, description
-FROM super_population
+SELECT id, code, name
+FROM superpopulation
 WHERE FALSE;
 
-SELECT code, super_population_code, description
+SELECT id, superpopulation_id, igsr_id, code, name, description
 FROM population
 WHERE FALSE;
 

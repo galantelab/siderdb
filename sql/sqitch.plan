@@ -6,3 +6,4 @@ populations 2023-09-29T20:15:32Z Thiago L. A. Miller <tmiller@mochsl.org.br> # C
 @v1.0.0-dev1 2023-10-19T03:41:38Z Thiago L. A. Miller <tmiller@mochsl.org.br> # Tag v1.0.0-dev1
 populations [populations@v1.0.0-dev1] 2023-10-19T03:44:13Z Thiago L. A. Miller <tmiller@mochsl.org.br> # Remake populations: code as pk
 @v1.0.0-dev2 2023-10-19T23:31:55Z Thiago L. A. Miller <tmiller@mochsl.org.br> # Tag v1.0.0-dev2
+populations [populations@v1.0.0-dev2] 2023-10-27T00:21:39Z Thiago L. A. Miller <tmiller@mochsl.org.br> # Remake populations: adapt to 1KGP

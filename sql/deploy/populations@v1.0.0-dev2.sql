@@ -3,7 +3,7 @@
 BEGIN;
 
 DROP TABLE population;
-DROP TABLE superpopulation;
+DROP TABLE super_population;
 
 CREATE TABLE super_population (
 	code CHAR(3) PRIMARY KEY,
